@@ -9,7 +9,14 @@ export default defineConfig({
       name: 'Smart Read AI',
       description: 'Smart Read AI - Web Extension for reading articles',
       version: '1.0.0',
-      permissions: ['storage'],
+      permissions: [
+        'storage',
+        'tabs',
+        'activeTab',
+        'scripting',
+        'contextMenus',
+        'declarativeNetRequest',
+      ],
     };
   },
 });
