@@ -6,17 +6,26 @@ export default defineContentScript({
   matches: ['*://*.google.com/*'],
   cssInjectionMode: 'ui',
   main(ctx) {
+    let lastClickPosition = { x: 0, y: 0 };
+
+    document.addEventListener('contextmenu', (e) => {
+      lastClickPosition = { x: e.clientX, y: e.clientY };
+    });
+
     chrome.runtime.onMessage.addListener(async (message) => {
       if (message.action === 'summarize-text') {
         console.log('Content script received message:', message);
-        const ui = await CreateUI(ctx);
+        const ui = await CreateUI(ctx, lastClickPosition);
         ui.mount();
       }
     });
   },
 });
 
-const CreateUI = async (ctx: ContentScriptContext) => {
+const CreateUI = async (
+  ctx: ContentScriptContext,
+  position: { x: number; y: number }
+) => {
   let removeUi: (() => void) | null = null;
 
   const ui = await createShadowRootUi(ctx, {
@@ -28,9 +37,12 @@ const CreateUI = async (ctx: ContentScriptContext) => {
         if (removeUi) removeUi();
       };
 
-      return CreateContentElement(root, () => (
-        <Button onClick={() => onRemove()}>Hello</Button>
-      ));
+      return CreateContentElement(
+        root,
+        position,
+        () => <Button onClick={() => onRemove()}>Hello</Button>,
+        onRemove
+      );
     },
     onRemove(root) {
       root?.unmount();
