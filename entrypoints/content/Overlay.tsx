@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import '@/entrypoints/popup/style.css';
 import { Spinner } from '@/components/ui/spinner';
-import { useGemini } from '@/entrypoints/hooks/useGemini';
+import { useSummarize } from '@/entrypoints/hooks/useSummarize.tsx';
 
 interface OverlayProps {
   selectedText: string;
@@ -14,7 +14,7 @@ export default function Overlay({
   selectedText,
   onRemove,
 }: Readonly<OverlayProps>) {
-  const { geminiResponse, loading } = useGemini(selectedText);
+  const { geminiResponse, loading } = useSummarize(selectedText);
 
   useEffect(() => {
     if (!selectedText) {

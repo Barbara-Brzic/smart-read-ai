@@ -58,7 +58,7 @@ const summarizeText = async (
   return extractGeminiResponse(data);
 };
 
-export const useGemini = (selectedText: string) => {
+export const useSummarize = (selectedText: string) => {
   const [response, setResponse] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { isLoaded, formData } = useFormData();
