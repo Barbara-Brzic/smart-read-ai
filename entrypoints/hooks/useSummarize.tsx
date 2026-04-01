@@ -13,7 +13,10 @@ interface GeminiResponse {
 }
 
 const createSummarizePrompt = (text: string): string => {
-  return `Your purpose is to summarize given text in order to provide faster reading experience. This is the text: ${text}`;
+  return `The user has selected the following text from a webpage. 
+  Provide a clear, concise summary highlighting the main points and key information. 
+  Include relevant context when helpful. Respond in the same language as the original text.
+  Text: ${text}`;
 };
 
 const createRequestPayload = (text: string) => ({
