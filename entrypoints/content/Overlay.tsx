@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import '@/entrypoints/popup/style.css';
-import { Spinner } from '@/components/ui/spinner';
 import { useSummarize } from '@/entrypoints/hooks/useSummarize.tsx';
-import Markdown from 'react-markdown';
-import { Header } from '@/entrypoints/content/Header.tsx';
+import { OverlayHeader } from '@/entrypoints/content/OverlayHeader.tsx';
+import { OverlayBody } from '@/entrypoints/content/OverlayBody.tsx';
 
 interface OverlayProps {
   selectedText: string;
@@ -25,17 +24,8 @@ export default function Overlay({
 
   return (
     <div className="p-4 bg-secondary text-secondary-foreground rounded-lg shadow-lg z-10001 space-y-2">
-      <Header onCloseClick={onRemove} />
-
-      <main className="flex flex-col gap-2 justify-center items-center min-h-25">
-        {loading && (
-          <div className="flex items-center gap-2">
-            <span>Summarizing...</span>
-            <Spinner />
-          </div>
-        )}
-        {!loading && geminiResponse && <Markdown>{geminiResponse}</Markdown>}
-      </main>
+      <OverlayHeader onCloseClick={onRemove} />
+      <OverlayBody loading={loading} text={geminiResponse} />
     </div>
   );
 }

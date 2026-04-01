@@ -1,6 +1,10 @@
 import { X } from 'lucide-react';
 
-export const Header = ({ onCloseClick }: { onCloseClick: () => void }) => {
+export const OverlayHeader = ({
+  onCloseClick,
+}: {
+  onCloseClick: () => void;
+}) => {
   return (
     <header className="flex justify-end">
       <button
