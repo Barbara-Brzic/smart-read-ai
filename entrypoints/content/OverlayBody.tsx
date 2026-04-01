@@ -17,7 +17,7 @@ export const OverlayBody = ({
       {error && (
         <p className="flex flex-col gap-3 justify-center items-center text-red-500">
           <CircleAlert />
-          {error}
+          <span>Failed to summarize text. Please try again</span>
         </p>
       )}
       {loading && (

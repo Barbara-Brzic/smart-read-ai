@@ -81,7 +81,9 @@ export const useSummarize = (selectedText: string) => {
         setResponse(summary);
       } catch (error) {
         console.error('Failed to summarize text:', error);
-        setError('Failed to summarize text. Please try again.');
+        setError(
+          error instanceof Error ? error.message : 'An unknown error occurred.'
+        );
       } finally {
         setIsLoading(false);
       }
