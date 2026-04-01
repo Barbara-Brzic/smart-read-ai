@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import '@/entrypoints/popup/style.css';
+
 export default function Overlay({
   selectedText,
   onRemove,
