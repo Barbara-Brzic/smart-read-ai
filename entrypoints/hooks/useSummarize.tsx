@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
 import { IFormData, useFormData } from '@/entrypoints/hooks/useFormData';
 
 interface GeminiResponse {
@@ -64,6 +63,7 @@ const summarizeText = async (
 export const useSummarize = (selectedText: string) => {
   const [response, setResponse] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { formData, isFormDataLoaded } = useFormData();
   const hasCalledRef = useRef(false);
 
@@ -81,9 +81,7 @@ export const useSummarize = (selectedText: string) => {
         setResponse(summary);
       } catch (error) {
         console.error('Failed to summarize text:', error);
-        toast.error(
-          'Failed to summarize text. Please check your API credentials.'
-        );
+        setError('Failed to summarize text. Please try again.');
       } finally {
         setIsLoading(false);
       }
@@ -92,5 +90,5 @@ export const useSummarize = (selectedText: string) => {
     fetchSummary();
   }, [selectedText, formData, isFormDataLoaded]);
 
-  return { geminiResponse: response, loading: isLoading };
+  return { geminiResponse: response, loading: isLoading, error };
 };

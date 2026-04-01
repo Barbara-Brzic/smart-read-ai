@@ -15,20 +15,22 @@ export default function Overlay({
   selectedText,
   onRemove,
 }: Readonly<OverlayProps>) {
-  const { geminiResponse, loading } = useSummarize(selectedText);
+  const { geminiResponse, loading, error } = useSummarize(selectedText);
 
   useEffect(() => {
     if (!selectedText) {
       toast.error('Please select some text to summarize.');
+    } else if (error) {
+      toast.error(error);
     }
-  }, [selectedText]);
+  }, [selectedText, error]);
 
   if (!selectedText) return null;
 
   return (
     <OverlayWrapper>
       <OverlayHeader onCloseClick={onRemove} />
-      <OverlayBody loading={loading} text={geminiResponse} />
+      <OverlayBody loading={loading} text={geminiResponse} error={error} />
     </OverlayWrapper>
   );
 }
