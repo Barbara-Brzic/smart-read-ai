@@ -1,6 +1,6 @@
 import { ContentScriptContext } from 'wxt/utils/content-script-context';
 import { CreateContentElement } from '@/entrypoints/content/CreateContentElement.tsx';
-import { Button } from '@/components/ui/button.tsx';
+import Overlay from '@/components/Overlay.tsx';
 
 export default defineContentScript({
   matches: ['*://*/*'],
@@ -45,12 +45,7 @@ const CreateUI = async (
       return CreateContentElement(
         root,
         position,
-        () => (
-          <div>
-            <Button onClick={() => onRemove()}>Close</Button>
-            {selectedText && <p>{selectedText}</p>}
-          </div>
-        ),
+        () => Overlay({ selectedText, onRemove }),
         onRemove
       );
     },
