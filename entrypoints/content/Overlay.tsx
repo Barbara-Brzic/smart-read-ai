@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import '@/entrypoints/popup/style.css';
 import { Spinner } from '@/components/ui/spinner';
 import { useSummarize } from '@/entrypoints/hooks/useSummarize.tsx';
+import Markdown from 'react-markdown';
 
 interface OverlayProps {
   selectedText: string;
@@ -41,9 +42,7 @@ export default function Overlay({
             <Spinner />
           </div>
         )}
-        {!loading && geminiResponse && (
-          <p className="text-sm leading-relaxed">{geminiResponse}</p>
-        )}
+        {!loading && geminiResponse && <Markdown>{geminiResponse}</Markdown>}
       </main>
     </div>
   );
