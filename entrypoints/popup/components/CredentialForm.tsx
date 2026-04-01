@@ -41,7 +41,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function CredentialForm() {
   const [showApiKey, setShowApiKey] = useState(false);
-  const { formData, setFormData } = useFormData();
+  const { formData, saveFormData } = useFormData();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: formData,
@@ -52,10 +52,8 @@ export default function CredentialForm() {
   }, [formData, form]);
 
   const onSubmit = (data: FormValues) => {
-    setFormData(data);
-    chrome.storage.local.set({ formData: data }, () =>
-      toast.success('API credentials saved')
-    );
+    saveFormData(data);
+    toast.success('API credentials saved');
   };
 
   return (

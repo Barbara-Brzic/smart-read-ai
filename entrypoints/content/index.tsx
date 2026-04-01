@@ -1,6 +1,6 @@
 import { ContentScriptContext } from 'wxt/utils/content-script-context';
 import { CreateContentElement } from '@/entrypoints/content/CreateContentElement.tsx';
-import Overlay from './Overlay';
+import Overlay from '@/entrypoints/content/Overlay.tsx';
 
 export default defineContentScript({
   matches: ['*://*/*'],

@@ -5,6 +5,12 @@ export interface IFormData {
   apiKey: string;
 }
 
+interface StorageResult {
+  formData?: IFormData;
+}
+
+const STORAGE_KEY = 'formData';
+
 export const useFormData = () => {
   const [formData, setFormData] = useState<IFormData>({
     endpoint: '',
@@ -13,14 +19,18 @@ export const useFormData = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    chrome.storage.local.get('formData', (result) => {
+    chrome.storage.local.get(STORAGE_KEY, (result: StorageResult) => {
       if (result.formData) {
-        // @ts-ignore
         setFormData(result.formData);
       }
       setIsLoaded(true);
     });
   }, []);
 
-  return { formData, setFormData, isLoaded };
+  const saveFormData = (data: IFormData) => {
+    setFormData(data);
+    chrome.storage.local.set({ [STORAGE_KEY]: data });
+  };
+
+  return { formData, saveFormData, isLoaded };
 };
