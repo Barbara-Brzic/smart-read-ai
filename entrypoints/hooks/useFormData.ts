@@ -32,5 +32,5 @@ export const useFormData = () => {
     chrome.storage.local.set({ [STORAGE_KEY]: data });
   };
 
-  return { formData, saveFormData, isLoaded };
+  return { formData, saveFormData, isFormDataLoaded: isLoaded };
 };

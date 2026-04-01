@@ -64,11 +64,11 @@ const summarizeText = async (
 export const useSummarize = (selectedText: string) => {
   const [response, setResponse] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { isLoaded, formData } = useFormData();
+  const { formData, isFormDataLoaded } = useFormData();
   const hasCalledRef = useRef(false);
 
   useEffect(() => {
-    if (!isLoaded || !selectedText || hasCalledRef.current) {
+    if (!isFormDataLoaded || !selectedText || hasCalledRef.current) {
       return;
     }
 
@@ -81,9 +81,6 @@ export const useSummarize = (selectedText: string) => {
         setResponse(summary);
       } catch (error) {
         console.error('Failed to summarize text:', error);
-        const errorMessage =
-          error instanceof Error ? error.message : 'An unknown error occurred';
-        setResponse(errorMessage);
         toast.error(
           'Failed to summarize text. Please check your API credentials.'
         );
@@ -93,7 +90,7 @@ export const useSummarize = (selectedText: string) => {
     };
 
     fetchSummary();
-  }, [selectedText, formData, isLoaded]);
+  }, [selectedText, formData, isFormDataLoaded]);
 
   return { geminiResponse: response, loading: isLoading };
 };
