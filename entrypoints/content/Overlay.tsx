@@ -23,6 +23,8 @@ export default function Overlay({
     }
   }, [selectedText]);
 
+  if (!selectedText) return null;
+
   return (
     <OverlayWrapper>
       <OverlayHeader onCloseClick={onRemove} />
