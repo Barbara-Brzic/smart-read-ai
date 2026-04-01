@@ -1,6 +1,6 @@
 import { ContentScriptContext } from 'wxt/utils/content-script-context';
 import { CreateContentElement } from '@/entrypoints/content/CreateContentElement.tsx';
-import Overlay from '@/components/Overlay.tsx';
+import Overlay from './Overlay';
 
 export default defineContentScript({
   matches: ['*://*/*'],
@@ -18,7 +18,6 @@ export default defineContentScript({
 
     chrome.runtime.onMessage.addListener(async (message) => {
       if (message.action === 'summarize-text') {
-        console.log('Content script received message:', message);
         const ui = await CreateUI(ctx, lastClickPosition, selectedText);
         ui.mount();
       }
@@ -45,7 +44,7 @@ const CreateUI = async (
       return CreateContentElement(
         root,
         position,
-        () => Overlay({ selectedText, onRemove }),
+        () => <Overlay selectedText={selectedText} onRemove={onRemove} />,
         onRemove
       );
     },

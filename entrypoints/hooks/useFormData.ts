@@ -10,6 +10,7 @@ export const useFormData = () => {
     endpoint: '',
     apiKey: '',
   });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     chrome.storage.local.get('formData', (result) => {
@@ -17,8 +18,9 @@ export const useFormData = () => {
         // @ts-ignore
         setFormData(result.formData);
       }
+      setIsLoaded(true);
     });
   }, []);
 
-  return { formData, setFormData };
+  return { formData, setFormData, isLoaded };
 };
