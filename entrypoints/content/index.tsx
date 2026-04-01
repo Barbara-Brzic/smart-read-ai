@@ -3,19 +3,23 @@ import { CreateContentElement } from '@/entrypoints/content/CreateContentElement
 import { Button } from '@/components/ui/button.tsx';
 
 export default defineContentScript({
-  matches: ['*://*.google.com/*'],
+  matches: ['*://*/*'],
   cssInjectionMode: 'ui',
   main(ctx) {
     let lastClickPosition = { x: 0, y: 0 };
+    let selectedText = '';
 
     document.addEventListener('contextmenu', (e) => {
       lastClickPosition = { x: e.clientX, y: e.clientY };
+
+      const selection = globalThis.getSelection();
+      selectedText = selection?.toString().trim() || '';
     });
 
     chrome.runtime.onMessage.addListener(async (message) => {
       if (message.action === 'summarize-text') {
         console.log('Content script received message:', message);
-        const ui = await CreateUI(ctx, lastClickPosition);
+        const ui = await CreateUI(ctx, lastClickPosition, selectedText);
         ui.mount();
       }
     });
@@ -24,7 +28,8 @@ export default defineContentScript({
 
 const CreateUI = async (
   ctx: ContentScriptContext,
-  position: { x: number; y: number }
+  position: { x: number; y: number },
+  selectedText: string
 ) => {
   let removeUi: (() => void) | null = null;
 
@@ -40,7 +45,12 @@ const CreateUI = async (
       return CreateContentElement(
         root,
         position,
-        () => <Button onClick={() => onRemove()}>Hello</Button>,
+        () => (
+          <div>
+            <Button onClick={() => onRemove()}>Close</Button>
+            {selectedText && <p>{selectedText}</p>}
+          </div>
+        ),
         onRemove
       );
     },
