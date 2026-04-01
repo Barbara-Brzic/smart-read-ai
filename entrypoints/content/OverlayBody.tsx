@@ -13,7 +13,7 @@ export const OverlayBody = ({
   error: string | null;
 }) => {
   return (
-    <main className="flex flex-col gap-2 justify-center items-center min-h-25">
+    <main className="flex flex-col gap-2 justify-center items-center min-h-25 mb-2">
       {error && (
         <p className="flex flex-col gap-3 justify-center items-center text-red-500">
           <CircleAlert />
@@ -28,7 +28,7 @@ export const OverlayBody = ({
       )}
       {!loading && text && (
         <ScrollArea className="w-full h-50 overflow-hidden">
-          <div className="p-2">
+          <div className="p-2 text-sm">
             <Markdown>{text}</Markdown>
           </div>
         </ScrollArea>
