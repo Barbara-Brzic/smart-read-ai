@@ -1,5 +1,6 @@
 import { Spinner } from '@/components/ui/spinner.tsx';
 import Markdown from 'react-markdown';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
 export const OverlayBody = ({
   loading,
@@ -16,7 +17,13 @@ export const OverlayBody = ({
           <Spinner />
         </div>
       )}
-      {!loading && text && <Markdown>{text}</Markdown>}
+      {!loading && text && (
+        <ScrollArea className="w-full h-50 overflow-hidden">
+          <div className="p-2">
+            <Markdown>{text}</Markdown>
+          </div>
+        </ScrollArea>
+      )}
     </main>
   );
 };
