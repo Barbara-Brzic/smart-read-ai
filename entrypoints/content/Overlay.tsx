@@ -4,6 +4,7 @@ import '@/entrypoints/popup/style.css';
 import { useSummarize } from '@/entrypoints/hooks/useSummarize.tsx';
 import { OverlayHeader } from '@/entrypoints/content/OverlayHeader.tsx';
 import { OverlayBody } from '@/entrypoints/content/OverlayBody.tsx';
+import { OverlayWrapper } from '@/entrypoints/content/OverlayWrapper.tsx';
 
 interface OverlayProps {
   selectedText: string;
@@ -23,9 +24,9 @@ export default function Overlay({
   }, [selectedText]);
 
   return (
-    <div className="p-4 bg-secondary text-secondary-foreground rounded-lg shadow-lg z-10001 space-y-2">
+    <OverlayWrapper>
       <OverlayHeader onCloseClick={onRemove} />
       <OverlayBody loading={loading} text={geminiResponse} />
-    </div>
+    </OverlayWrapper>
   );
 }
