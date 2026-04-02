@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import '@/entrypoints/popup/style.css';
 import { useSummarize } from '@/entrypoints/hooks/useSummarize.tsx';
@@ -16,6 +16,7 @@ export default function Overlay({
   onRemove,
 }: Readonly<OverlayProps>) {
   const { geminiResponse, loading, error } = useSummarize(selectedText);
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
     if (!selectedText) {
@@ -25,19 +26,27 @@ export default function Overlay({
     }
   }, [selectedText, error]);
 
+  const handleClose = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onRemove();
+    }, 200);
+  };
+
   if (!selectedText) return null;
 
   return (
     <OverlayWrapper
+      isExiting={isExiting}
       render={(handleMouseDown) => (
         <>
           <OverlayHeader
-            onCloseClick={onRemove}
+            onCloseClick={handleClose}
             onMouseDown={handleMouseDown}
           />
           <OverlayBody loading={loading} text={geminiResponse} error={error} />
         </>
       )}
-    ></OverlayWrapper>
+    />
   );
 }

@@ -12,6 +12,7 @@ export const CreateContentElement = (
 
   // Create backdrop overlay
   const backdrop = document.createElement('div');
+  backdrop.className = 'backdrop-enter';
   Object.assign(backdrop.style, {
     position: 'fixed',
     top: '0',
