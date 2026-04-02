@@ -28,9 +28,16 @@ export default function Overlay({
   if (!selectedText) return null;
 
   return (
-    <OverlayWrapper>
-      <OverlayHeader onCloseClick={onRemove} />
-      <OverlayBody loading={loading} text={geminiResponse} error={error} />
-    </OverlayWrapper>
+    <OverlayWrapper
+      render={(handleMouseDown) => (
+        <>
+          <OverlayHeader
+            onCloseClick={onRemove}
+            onMouseDown={handleMouseDown}
+          />
+          <OverlayBody loading={loading} text={geminiResponse} error={error} />
+        </>
+      )}
+    ></OverlayWrapper>
   );
 }
