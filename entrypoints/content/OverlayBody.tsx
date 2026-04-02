@@ -26,7 +26,7 @@ export const OverlayBody = ({ loading, text, error }: OverlayBodyProps) => {
       )}
       {!loading && text && (
         <ScrollArea className="w-full h-50 overflow-hidden">
-          <div className="p-2 text-sm text-wrap">
+          <div className="p-2 text-sm text-wrap text-center">
             <Markdown>{text}</Markdown>
           </div>
         </ScrollArea>
