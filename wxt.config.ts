@@ -7,7 +7,7 @@ export default defineConfig({
     return {
       manifest_version: manifestVersion,
       name: 'Smart Read AI',
-      description: 'Smart Read AI - Web Extension for reading articles',
+      description: 'AI-powered text summarization. Select any text and get instant summaries using Google Gemini AI.',
       version: '1.0.0',
       permissions: [
         'storage',
