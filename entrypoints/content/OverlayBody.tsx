@@ -3,19 +3,17 @@ import Markdown from 'react-markdown';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { CircleAlert } from 'lucide-react';
 
-export const OverlayBody = ({
-  loading,
-  text,
-  error,
-}: {
+type OverlayBodyProps = {
   loading: boolean;
   text: string | null;
   error: string | null;
-}) => {
+};
+
+export const OverlayBody = ({ loading, text, error }: OverlayBodyProps) => {
   return (
     <main className="flex flex-col gap-2 justify-center items-center min-h-25 mb-2">
       {error && (
-        <p className="flex flex-col gap-3 justify-center items-center text-red-500">
+        <p className="flex flex-col gap-3 justify-center items-center text-destructive">
           <CircleAlert />
           <span>Failed to summarize text. Please try again</span>
         </p>
@@ -28,7 +26,7 @@ export const OverlayBody = ({
       )}
       {!loading && text && (
         <ScrollArea className="w-full h-50 overflow-hidden">
-          <div className="p-2 text-sm">
+          <div className="p-2 text-sm text-wrap">
             <Markdown>{text}</Markdown>
           </div>
         </ScrollArea>
